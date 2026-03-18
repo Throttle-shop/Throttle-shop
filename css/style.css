@@ -2,7 +2,7 @@
   --accent: #000;
   --dark: #e9e9e9;
   --card: #1a1a1a;
-  --hover: #363636
+  --hover: #363636;
 }
 
 * {
@@ -24,33 +24,65 @@ h1, h2, h3 {
   letter-spacing: 1px;
 }
 
-/* Sticky must be on the wrapper div, not the injected <header> inside it */
+/* ── Sticky wrapper — overflow:visible lets logo hang below ── */
 #header {
   position: sticky;
   top: 0;
   z-index: 100;
+  overflow: visible;
 }
 
 header {
   background: #ffffff;
   border-bottom: 3px solid var(--accent);
+  overflow: visible;
 }
 
 nav {
   max-width: 1200px;
   margin: auto;
-  padding: 15px 20px;
+  /* extra bottom padding creates the "shelf" the logo hangs off */
+  padding: 12px 20px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  transition: padding 0.35s ease;
+}
+
+/* ── Logo — hangs 22px below the header border ── */
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  z-index: 101;
 }
 
 .logo {
+  height: 68px;
+  width: auto;
   max-width: 100%;
-  height: auto;
+  transform: translateY(22px);
+  transition: height 0.35s ease, transform 0.35s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
 }
 
+/* ── Scrolled state — shrinks to roughly half ── */
+#header.scrolled nav {
+  padding: 8px 20px 16px;
+}
+
+#header.scrolled .logo {
+  height: 34px;
+  transform: translateY(12px);
+}
+
+#header.scrolled .phone {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+}
+
+/* ── Nav links ── */
 .nav-links {
   display: flex;
   gap: 30px;
@@ -76,8 +108,10 @@ nav {
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
+  transition: padding 0.35s ease, font-size 0.35s ease;
 }
 
+/* ── Hero ── */
 .hero {
   height: 80vh;
   min-height: 500px;
