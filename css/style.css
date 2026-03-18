@@ -24,12 +24,16 @@ h1, h2, h3 {
   letter-spacing: 1px;
 }
 
-header {
-  background: #ffffff;
-  border-bottom: 3px solid var(--accent);
+/* Sticky must be on the wrapper div, not the injected <header> inside it */
+#header {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+header {
+  background: #ffffff;
+  border-bottom: 3px solid var(--accent);
 }
 
 nav {
@@ -125,4 +129,11 @@ section {
 }
 
 footer {
-  background
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 60px;
+  font-size: 0.95rem;
+  line-height: 2;
+}
