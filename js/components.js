@@ -29,15 +29,42 @@ async function loadComponents() {
     document.querySelectorAll('.menu-toggle').forEach(el => el.style.display = 'block');
   }
 
-  // ── Shrink header on scroll ──
-  const headerWrapper = document.getElementById('header');
+  // ── Stutter-free shrinking header ──────────────────────────────────────
+  // Drives padding directly via inline style inside a requestAnimationFrame,
+  // same approach as johnsmith5710.github.io — avoids class-toggle layout
+  // recalculation that causes the in-between stutter.
+  const nav = document.querySelector('#header nav');
+  if (!nav) return;
+
+  const PAD_TOP_FULL    = 15;   // px — matches CSS starting value
+  const PAD_BOTTOM_FULL = 15;
+  const PAD_TOP_SMALL   = 6;
+  const PAD_BOTTOM_SMALL = 6;
+  const SCROLL_RANGE    = 80;   // px of scroll over which the shrink happens
+
+  let ticking = false;
+
+  function updateHeader() {
+    const progress = Math.min(window.scrollY / SCROLL_RANGE, 1); // 0 → 1
+
+    const padTop    = PAD_TOP_FULL    + (PAD_TOP_SMALL    - PAD_TOP_FULL)    * progress;
+    const padBottom = PAD_BOTTOM_FULL + (PAD_BOTTOM_SMALL - PAD_BOTTOM_FULL) * progress;
+
+    nav.style.paddingTop    = padTop    + 'px';
+    nav.style.paddingBottom = padBottom + 'px';
+
+    ticking = false;
+  }
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
-      headerWrapper.classList.add('scrolled');
-    } else {
-      headerWrapper.classList.remove('scrolled');
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
     }
   }, { passive: true });
+
+  // Set initial state
+  updateHeader();
 }
 
 window.onload = loadComponents;
