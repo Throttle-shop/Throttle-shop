@@ -36,8 +36,8 @@ async function loadComponents() {
   const nav = document.querySelector('#header nav');
   if (!nav) return;
 
-  const PAD_TOP_FULL    = 15;   // px — matches CSS starting value
-  const PAD_BOTTOM_FULL = 15;
+  const PAD_TOP_FULL    = 50;   // px — matches CSS starting value
+  const PAD_BOTTOM_FULL = 50;
   const PAD_TOP_SMALL   = 6;
   const PAD_BOTTOM_SMALL = 6;
   const SCROLL_RANGE    = 80;   // px of scroll over which the shrink happens
